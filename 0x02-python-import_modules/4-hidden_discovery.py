@@ -1,12 +1,9 @@
 #!/usr/bin/python3
 import hidden_4
 
-i = 0
+myList = dir(hidden_4)
 
 if __name__ == '__main__':
-    mylist = dir(hidden_4)
-    newlist = sorted(mylist)
-    while i < len(newlist):
-        if newlist[i][0] != '_':
-            print(newlist[i])
-        i += 1
+    for name in sorted(myList):
+        if name[0] != '_':
+            print(name)
