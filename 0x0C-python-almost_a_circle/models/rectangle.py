@@ -1,123 +1,134 @@
 #!/usr/bin/python3
-"""
-This module implements a Rectangle object
-"""
-from models.base import Base
+'''rectangle Module / task 2'''
+
+from .base import Base
+from sys import stdout
 
 
 class Rectangle(Base):
-    """Rectangle implementation
-    """
-
-    def __init__(self, width: int, height: int, x=0, y=0, id=None):
-        """initialization
-        """
+    '''Rectangle Class that inherits from Base Class'''
+    def __init__(self, width, height, x=0, y=0, id=None):
+        '''Initialisation of the instance'''
         super().__init__(id)
-
         self.width = width
         self.height = height
         self.x = x
         self.y = y
 
-    def __str__(self) -> str:
-        """string representation
-        """
-        return "[Rectangle] ({}) {}/{} - {}/{}" \
-            .format(self.id, self.x, self.y, self.width, self.height)
+    # *********** Properties Setters and Getters Section *************
 
-    def check_type_value(self, name:  str, value: object, greater_equal=False):
-        """type and value validation
-        """
-
-        if not isinstance(value, int):
-            raise TypeError("{} must be an integer".format(name))
-        if not greater_equal:
-            if value <= 0:
-                raise ValueError("{} must be > 0".format(name))
-        else:
-            if value < 0:
-                raise ValueError("{} must be >= 0".format(name))
-
+    #  width Property
     @property
-    def width(self) -> int:
-        """width getter
-        """
+    def width(self):
+        '''retrieves the __width attribute value'''
         return self.__width
 
     @width.setter
-    def width(self, width: int):
-        """width setter
-        """
-        self.check_type_value('width', width)
-        self.__width = width
+    def width(self, value):
+        '''sets the new value to the __width attribute'''
+        if type(value) is not int:
+            raise TypeError('width must be an integer')
+        if value <= 0:
+            raise ValueError('width must be > 0')
+        self.__width = value
 
+    #  height Property
     @property
-    def height(self) -> int:
-        """height getter
-        """
+    def height(self):
+        '''retrieves the __height attribute value'''
         return self.__height
 
     @height.setter
-    def height(self, height: int):
-        """height setter
-        """
-        self.check_type_value('height', height)
-        self.__height = height
+    def height(self, value):
+        '''sets the new value to the __height attribute'''
+        if type(value) is not int:
+            raise TypeError('height must be an integer')
+        if value <= 0:
+            raise ValueError('height must be > 0')
+        self.__height = value
 
+    #  x Property
     @property
-    def x(self) -> int:
-        """x getter
-        """
+    def x(self):
+        '''retrieves the __x attribute value'''
         return self.__x
 
     @x.setter
-    def x(self, x: int):
-        """x setter
-        """
-        self.check_type_value('x', x, True)
-        self.__x = x
+    def x(self, value):
+        '''sets the new value to the __x attribute'''
+        if type(value) is not int:
+            raise TypeError('x must be an integer')
+        if value < 0:
+            raise ValueError('x must be >= 0')
+        self.__x = value
 
+    #  y Property
     @property
-    def y(self) -> int:
-        """y getter
-        """
+    def y(self):
+        '''retrieves the __y attribute value'''
         return self.__y
 
     @y.setter
-    def y(self, y: int):
-        """y setter
-        """
-        self.check_type_value('y', y, True)
-        self.__y = y
+    def y(self, value):
+        '''sets the new value to the __y attribute'''
+        if type(value) is not int:
+            raise TypeError('y must be an integer')
+        if value < 0:
+            raise ValueError('y must be >= 0')
+        self.__y = value
 
-    def area(self) -> int:
-        """area
-        """
+    # **** End of Properties Setters and Getters Section *****
+
+    # *************** Instance Methods Section ***************
+
+    def area(self):
+        '''calculates the rectangle area
+        Returns:
+            the calculation result "the area"
+        '''
         return self.width * self.height
 
     def display(self):
-        """prints # shape of the rectangle
-        """
-        print('\n'*self.y, end='')
-        for l in range(self.height):
-            print(' '*self.x + '#'*self.width)
+        '''prints the rectangle instance with the # character'''
+        buffer = [' ' * self.x + '#' * self.width for h in range(self.height)]
+        print('\n' * self.y + '\n'.join(buffer))
 
     def update(self, *args, **kwargs):
-        """update rectangle attributes
-        """
+        '''Updates the instance attributes from
+        the arguments passed in a strict order
+        or from the kwargs
+        '''
+        i = 0
+        attributes = ['id', 'width', 'height', 'x', 'y']
+        if len(args) > 0:
+            for attr in attributes:
+                if i > len(args) - 1:
+                    break
+                setattr(self, attr, args[i])
+                i += 1
+        else:
+            for key, value in kwargs.items():
+                if key not in attributes:
+                    continue
+                setattr(self, key, value)
 
-        expect = (self.id, self.width, self.height, self.x, self.y)
-        if args != ():
-            self.id, self.width, self.height, self.x, self.y = \
-                args + expect[len(args):len(expect)]
-        elif kwargs:
-            for (name, value) in kwargs.items():
-                setattr(self, name, value)
-
-    def to_dictionary(self) -> int:
-        """rectangle to dictionary
-        """
-
+    def to_dictionary(self):
+        '''returns the dictionary representation of a Rectangle instance'''
         return {
-            'x': self.x, 'y': self.y, 'id': self.id,
-            'height': self.height, 'width': self.width}
+                'id': self.id,
+                'x': self.x,
+                'y': self.y,
+                'width': self.width,
+                'height': self.height
+                }
+
+    # *********** End of Instance Methods Section ************
+
+    # **************** Magic Methods Section *****************
+
+    def __str__(self):
+        '''returns the string representation fo the instance'''
+        return (f'[Rectangle] ({self.id}) {self.x}/{self.y}'
+                f' - {self.width}/{self.height}')
+
+    # ************ End of Magic Methods Section **************
