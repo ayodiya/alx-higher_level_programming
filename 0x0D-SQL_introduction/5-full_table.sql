@@ -1,2 +1,2 @@
--- show table description with usinng DESCRIBE or EXPLAIN
-SHOW FULL COLUMNS FROM first_table;
+-- Script that prints the full description of first_table from hbtn_0c_0
+SHOW CREATE TABLE first_table;
