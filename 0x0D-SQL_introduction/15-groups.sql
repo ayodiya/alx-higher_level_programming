@@ -1,4 +1,4 @@
 -- The result should display: the score the number of records for this score with the label number
 -- The list should be sorted by the number of records (descending)
 -- The database name will be passed as an argument to the mysql command
-SELECT score, count(*) as 'average' FROM second_table GROUP BY score
+SELECT score, count(*) as 'number' FROM second_table GROUP BY score;
