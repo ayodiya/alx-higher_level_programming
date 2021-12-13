@@ -5,5 +5,5 @@ if (isNaN(process.argv[2])) {
 }
 const num = process.argv[2];
 for (let i = 0; i < num; i++) {
-  console.log('x'.repeat(num));
+  console.log('X'.repeat(num));
 }
