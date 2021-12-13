@@ -3,7 +3,7 @@ const argsLength = process.argv.length - 2;
 const argArray = [];
 
 for (let i = 0; i < argsLength; i++) {
-  argArray.push(process.argv[2 + i]);
+  argArray.push(parseInt(process.argv[2 + i]));
 }
 
 argArray.sort();
